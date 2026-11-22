@@ -232,7 +232,6 @@ Terrain::Terrain()
     , diamond_square_spacing(1.0f)
     , diamond_square_half_span(0.0f)
     , active_mode(Mode::Sinusoidal)
-    , active_color_scheme(ColorScheme::Grayscale)
     , sinusoidal_params(default_sinusoidal_params())
     , perlin_params(default_perlin_params())
     , simplex_params(default_simplex_params())
@@ -404,16 +403,6 @@ void Terrain::set_mode(Mode new_mode)
 Terrain::Mode Terrain::get_mode() const
 {
     return active_mode;
-}
-
-void Terrain::set_color_scheme(ColorScheme new_color_scheme)
-{
-    active_color_scheme = new_color_scheme;
-}
-
-Terrain::ColorScheme Terrain::get_color_scheme() const
-{
-    return active_color_scheme;
 }
 
 void Terrain::reset_active_mode_params_to_defaults()
@@ -859,7 +848,6 @@ void Terrain::render(double now, int width, int height, const Camera& camera, bo
     shader.use();
     shader.set_mat4("mvp", mvp);
     shader.set_vec3("light_dir", 0.4f, 1.0f, 0.35f);
-    shader.set_int("color_scheme", static_cast<int>(active_color_scheme));
 
     if (wireframe_enabled)
     {
