@@ -7,6 +7,7 @@
 namespace
 {
 static constexpr float walk_speed = 5.0f;
+static constexpr float keyboard_look_speed_deg_per_sec = 90.0f;
 static constexpr float walk_gravity = -24.0f;
 static constexpr float walk_jump_speed = 9.0f;
 static constexpr float walk_eye_height = 1.7f;
@@ -45,12 +46,30 @@ Vec3 Camera::get_forward() const
     return norm(f);
 }
 
-void Camera::update(const Input& input, float dt, const Terrain& terrain, bool allow_mouse_look)
+void Camera::update(const Input& input, float dt, const Terrain& terrain, bool allow_look)
 {
-    if (allow_mouse_look)
+    if (allow_look)
     {
         yaw_deg += static_cast<float>(input.get_mouse_dx()) * mouse_sensitivity;
         pitch_deg -= static_cast<float>(input.get_mouse_dy()) * mouse_sensitivity;
+
+        const float keyboard_look_step = keyboard_look_speed_deg_per_sec * dt;
+        if (input.is_key_down(GLFW_KEY_LEFT))
+        {
+            yaw_deg -= keyboard_look_step;
+        }
+        if (input.is_key_down(GLFW_KEY_RIGHT))
+        {
+            yaw_deg += keyboard_look_step;
+        }
+        if (input.is_key_down(GLFW_KEY_UP))
+        {
+            pitch_deg += keyboard_look_step;
+        }
+        if (input.is_key_down(GLFW_KEY_DOWN))
+        {
+            pitch_deg -= keyboard_look_step;
+        }
     }
 
     if (pitch_deg > 89.0f)
