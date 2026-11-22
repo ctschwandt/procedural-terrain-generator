@@ -30,7 +30,7 @@ namespace
     static constexpr float help_overlay_x = 14.0f;
     static constexpr float help_overlay_y = 14.0f;
     static constexpr float help_overlay_width = 250.0f;
-    static constexpr float help_overlay_height = 244.0f;
+    static constexpr float help_overlay_height = 222.0f;
     static constexpr float help_overlay_outline_thickness = 2.0f;
     static constexpr float help_overlay_text_x_offset = 12.0f;
     static constexpr float help_overlay_text_y_start = 12.0f;
@@ -690,8 +690,7 @@ void App::run()
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 5.0f, help_overlay_text_scale, ui_color_help_overlay_text, "f1 help");
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 6.0f, help_overlay_text_scale, ui_color_help_overlay_text, "f2 movement mode");
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 7.0f, help_overlay_text_scale, ui_color_help_overlay_text, "f3 wireframe");
-            g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 8.0f, help_overlay_text_scale, ui_color_help_overlay_text, "arrows look around");
-            g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 9.0f, help_overlay_text_scale, ui_color_help_overlay_text, "c color palette");
+            g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 8.0f, help_overlay_text_scale, ui_color_help_overlay_text, "c color palette");
         }
 
         if (show_terrain_panel)
