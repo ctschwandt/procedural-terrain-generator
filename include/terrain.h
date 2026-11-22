@@ -21,11 +21,10 @@ public:
 
     enum class ColorScheme
     {
-        NaturalMountain = 0,
+        Grayscale = 0,
         Canyon = 1,
         FrozenTundra = 2,
-        Grayscale = 3,
-        Volcanic = 4
+        Volcanic = 3
     };
 
     struct SinusoidalParams
