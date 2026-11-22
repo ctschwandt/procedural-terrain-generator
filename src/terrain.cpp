@@ -859,6 +859,7 @@ void Terrain::render(double now, int width, int height, const Camera& camera, bo
     shader.use();
     shader.set_mat4("mvp", mvp);
     shader.set_vec3("light_dir", 0.4f, 1.0f, 0.35f);
+    shader.set_int("color_scheme", static_cast<int>(active_color_scheme));
 
     if (wireframe_enabled)
     {

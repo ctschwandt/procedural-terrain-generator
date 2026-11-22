@@ -30,7 +30,7 @@ namespace
     static constexpr float help_overlay_x = 14.0f;
     static constexpr float help_overlay_y = 14.0f;
     static constexpr float help_overlay_width = 250.0f;
-    static constexpr float help_overlay_height = 222.0f;
+    static constexpr float help_overlay_height = 244.0f;
     static constexpr float help_overlay_outline_thickness = 2.0f;
     static constexpr float help_overlay_text_x_offset = 12.0f;
     static constexpr float help_overlay_text_y_start = 12.0f;
@@ -462,6 +462,19 @@ void main()
         return "Simplex";
     }
 
+    static const char* color_scheme_label(Terrain::ColorScheme scheme)
+    {
+        switch (scheme)
+        {
+            case Terrain::ColorScheme::NaturalMountain: return "Natural";
+            case Terrain::ColorScheme::Canyon: return "Canyon";
+            case Terrain::ColorScheme::FrozenTundra: return "Tundra";
+            case Terrain::ColorScheme::Grayscale: return "Gray";
+            case Terrain::ColorScheme::Volcanic: return "Volcanic";
+        }
+        return "Unknown";
+    }
+
     static float normalize_to_01(float value, float min_value, float max_value)
     {
         if (max_value <= min_value)
@@ -634,6 +647,13 @@ void App::run()
                 scene.get_terrain_mut().reset_active_mode_params_to_defaults();
             }
 
+            if (input.is_key_pressed(GLFW_KEY_C))
+            {
+                Terrain& active_terrain = scene.get_terrain_mut();
+                int next_scheme = (static_cast<int>(active_terrain.get_color_scheme()) + 1) % 5;
+                active_terrain.set_color_scheme(static_cast<Terrain::ColorScheme>(next_scheme));
+            }
+
         }
 
         Terrain& terrain = scene.get_terrain_mut();
@@ -672,6 +692,7 @@ void App::run()
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 6.0f, help_overlay_text_scale, ui_color_help_overlay_text, "f2 movement mode");
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 7.0f, help_overlay_text_scale, ui_color_help_overlay_text, "f3 wireframe");
             g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 8.0f, help_overlay_text_scale, ui_color_help_overlay_text, "arrows look around");
+            g_ui_renderer.add_text(ox + 12.0f, oy + help_overlay_text_y_start + help_overlay_text_y_step * 9.0f, help_overlay_text_scale, ui_color_help_overlay_text, "c color palette");
         }
 
         if (show_terrain_panel)
@@ -694,7 +715,8 @@ void App::run()
                                      + float(slider_row_count) * terrain_slider_row_step
                                      + terrain_panel_button_gap
                                      + terrain_button_height
-                                     + terrain_panel_bottom_padding;
+                                     + terrain_panel_bottom_padding
+                                     + 72.0f; // Space for palette selector
 
             g_ui_renderer.add_rect(px, py, panel_width, panel_height, ui_color_panel_bg);
             g_ui_renderer.add_outline_rect(px, py, panel_width, panel_height, terrain_panel_outline_thickness, ui_color_panel_outline);
@@ -1089,6 +1111,31 @@ void App::run()
             if (draw_button(px + terrain_button_reset_x_offset, button_y, terrain_button_reset_width, terrain_button_height, "Reset Defaults"))
             {
                 terrain.reset_active_mode_params_to_defaults();
+            }
+
+            // Color selection changes a shader uniform, not terrain geometry.
+            g_ui_renderer.add_text(px + 12.0f, button_y + 46.0f, 1.5f, ui_color_panel_text, "COLOR PALETTE");
+            const Terrain::ColorScheme schemes[] = {
+                Terrain::ColorScheme::NaturalMountain,
+                Terrain::ColorScheme::Canyon,
+                Terrain::ColorScheme::FrozenTundra,
+                Terrain::ColorScheme::Grayscale,
+                Terrain::ColorScheme::Volcanic
+            };
+            const float palette_button_width = 92.0f;
+            const float palette_button_gap = 6.0f;
+            const float palette_button_y = button_y + 64.0f;
+            for (int i = 0; i < 5; ++i)
+            {
+                const float bx = px + 12.0f + float(i) * (palette_button_width + palette_button_gap);
+                if (draw_button(bx, palette_button_y, palette_button_width, 32.0f, color_scheme_label(schemes[i])))
+                {
+                    terrain.set_color_scheme(schemes[i]);
+                }
+                if (terrain.get_color_scheme() == schemes[i])
+                {
+                    g_ui_renderer.add_outline_rect(bx, palette_button_y, palette_button_width, 32.0f, 2.0f, ui_color_slider_track_fill);
+                }
             }
         }
 
