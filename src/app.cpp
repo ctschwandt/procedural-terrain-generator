@@ -153,7 +153,7 @@ namespace
     public:
         bool init()
         {
-            const char * vs_src = R"(#version 460 core
+            const char * vs_src = R"(#version 420 core
 layout (location = 0) in vec2 a_pos;
 layout (location = 1) in vec4 a_color;
 out vec4 v_color;
@@ -164,7 +164,7 @@ void main()
 }
 )";
 
-            const char * fs_src = R"(#version 460 core
+            const char * fs_src = R"(#version 420 core
 in vec4 v_color;
 out vec4 frag_color;
 void main()
@@ -515,7 +515,7 @@ bool App::init()
     }
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(default_window_width, default_window_height, app_title, nullptr, nullptr);
