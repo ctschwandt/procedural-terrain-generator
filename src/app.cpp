@@ -466,7 +466,6 @@ void main()
     {
         switch (scheme)
         {
-            case Terrain::ColorScheme::NaturalMountain: return "Natural";
             case Terrain::ColorScheme::Canyon: return "Canyon";
             case Terrain::ColorScheme::FrozenTundra: return "Tundra";
             case Terrain::ColorScheme::Grayscale: return "Gray";
@@ -650,7 +649,7 @@ void App::run()
             if (input.is_key_pressed(GLFW_KEY_C))
             {
                 Terrain& active_terrain = scene.get_terrain_mut();
-                int next_scheme = (static_cast<int>(active_terrain.get_color_scheme()) + 1) % 5;
+                int next_scheme = (static_cast<int>(active_terrain.get_color_scheme()) + 1) % 4;
                 active_terrain.set_color_scheme(static_cast<Terrain::ColorScheme>(next_scheme));
             }
 
@@ -1116,16 +1115,15 @@ void App::run()
             // Color selection changes a shader uniform, not terrain geometry.
             g_ui_renderer.add_text(px + 12.0f, button_y + 46.0f, 1.5f, ui_color_panel_text, "COLOR PALETTE");
             const Terrain::ColorScheme schemes[] = {
-                Terrain::ColorScheme::NaturalMountain,
+                Terrain::ColorScheme::Grayscale,
                 Terrain::ColorScheme::Canyon,
                 Terrain::ColorScheme::FrozenTundra,
-                Terrain::ColorScheme::Grayscale,
                 Terrain::ColorScheme::Volcanic
             };
-            const float palette_button_width = 92.0f;
+            const float palette_button_width = 118.0f;
             const float palette_button_gap = 6.0f;
             const float palette_button_y = button_y + 64.0f;
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < 4; ++i)
             {
                 const float bx = px + 12.0f + float(i) * (palette_button_width + palette_button_gap);
                 if (draw_button(bx, palette_button_y, palette_button_width, 32.0f, color_scheme_label(schemes[i])))
