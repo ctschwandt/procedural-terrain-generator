@@ -19,14 +19,6 @@ public:
         Simplex
     };
 
-    enum class ColorScheme
-    {
-        Grayscale = 0,
-        Canyon = 1,
-        FrozenTundra = 2,
-        Volcanic = 3
-    };
-
     struct SinusoidalParams
     {
         float amplitude;
@@ -74,8 +66,6 @@ public:
 
     void set_mode(Mode new_mode);
     Mode get_mode() const;
-    void set_color_scheme(ColorScheme new_color_scheme);
-    ColorScheme get_color_scheme() const;
     float get_height_at_world(float world_x, float world_z) const;
 
     void reset_active_mode_params_to_defaults();
@@ -101,7 +91,6 @@ private:
     float diamond_square_half_span;
     Shader shader;
     Mode active_mode;
-    ColorScheme active_color_scheme;
 
     SinusoidalParams sinusoidal_params;
     PerlinParams perlin_params;

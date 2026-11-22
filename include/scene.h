@@ -13,7 +13,6 @@ public:
     void shutdown();
 
     void set_terrain_mode(Terrain::Mode mode);
-    void set_terrain_color_scheme(Terrain::ColorScheme color_scheme);
     const Terrain& get_terrain() const;
     Terrain& get_terrain_mut();
 

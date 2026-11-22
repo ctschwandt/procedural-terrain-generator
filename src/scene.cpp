@@ -25,11 +25,6 @@ void Scene::set_terrain_mode(Terrain::Mode mode)
     terrain.set_mode(mode);
 }
 
-void Scene::set_terrain_color_scheme(Terrain::ColorScheme color_scheme)
-{
-    terrain.set_color_scheme(color_scheme);
-}
-
 const Terrain& Scene::get_terrain() const
 {
     return terrain;
